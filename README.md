@@ -14,14 +14,21 @@ Each folder has its own README or comments explaining what I did and how it work
 ## Current Projects 
 ### Simple C++ test program
 A program to learn the basics in c++
+
 Look under cppTestProject/W3SchoolTutorial/myfirstprogram.cpp for notes I made via Comments. 
+
+todo: write the comments into a Markdown File, continue from the C++ functions chapter 
 
 ## Projects on hold
 ### Spinning Doughnut
 
 ## Planned Projects
-### Simple game engine in C++
+### RenCi
+A Visual Novel craetor tool simalar to RenPy but in C++
+
+This will most likely get it's own repository but I might as well write it up here so I won't forgett it
+
+### Simple RPG game engine in C++
 
 ## TODO
-- Add more structured practice projects
-- Improve organization
+- Make better todos
