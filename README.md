@@ -11,11 +11,15 @@ This repo is for experimenting and tracking progress over time.
 ## Notes
 Each folder has its own README or comments explaining what I did and how it works.
 
-## Current Projects (On hold untill the end of test season)
+## Current Projects 
+### Simple C++ test program
+A program to learn the basics in c++
+
+## Projects on hold
 ### Spinning Doughnut
 
 ## Planned Projects
-### Simple gameengine in C++
+### Simple game engine in C++
 
 ## TODO
 - Add more structured practice projects
