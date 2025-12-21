@@ -14,6 +14,7 @@ Each folder has its own README or comments explaining what I did and how it work
 ## Current Projects 
 ### Simple C++ test program
 A program to learn the basics in c++
+Look under cppTestProject/W3SchoolTutorial/myfirstprogram.cpp for notes I made via Comments. 
 
 ## Projects on hold
 ### Spinning Doughnut
