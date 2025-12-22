@@ -15,13 +15,7 @@ Each folder has its own README or comments explaining what I did and how it work
 ### Simple C++ test program
 A program to learn the basics in c++
 
-<<<<<<< HEAD
 Look under cppTestProject/W3SchoolTutorial/myFirstProgram.cpp for notes I made via Comments. 
-
-todo: write the comments into a Markdown File, continue from the C++ functions chapter 
-=======
-Look under cppTestProject/W3SchoolTutorial/myfirstprogram.cpp for notes I made via Comments. 
->>>>>>> d284d5b74e0784c5fb50b750efef8a6998feb4dc
 
 todo: write the comments into a Markdown File, continue from the C++ functions chapter 
 
