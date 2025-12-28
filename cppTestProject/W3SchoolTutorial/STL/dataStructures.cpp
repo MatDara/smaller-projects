@@ -59,7 +59,104 @@ int main(){
 
     cout << "Max size: " << sharkTypes.max_size() << endl;
 
-    // continue at C++ List
+    // C++ List
+    // Lists are similar to vectors but they don't have indexes and both the back and the front can be added or removed.
+    
+    cout << "\n\nLists:\n";
+
+    list<string> sharkTypesList = {"Goblin", "Lemon", "Salmon", "Bull", "Nurse", "Greenland"};
+
+    for(string shark : sharkTypesList){
+        cout << "Shark type: " << shark << " Shark" << endl;
+    }
+
+    cout << "First shark type: " << sharkTypesList.front() << endl;
+    cout << "Last shark type: " << sharkTypesList.back() << endl;
+
+    sharkTypesList.front() = "Tiger";
+    sharkTypesList.back() = "Zebra";
+
+    sharkTypesList.push_back("Hammerhead"); // adds to the back
+    sharkTypesList.push_front("Blacktip"); // adds to the front
+
+    sharkTypesList.pop_back(); // removes from the back
+    sharkTypesList.pop_front(); // removes from the front
+
+    // it also has .empty() and .size()
+    // it can not be looped trough with a for loop because it has no indexes
+
+
+    //Stacks
+
+    cout << "\n\nStacks:\n";
+
+    stack<string> sharkTypesStack;
+
+    // stacks can not be declared with elements like lists or vectors
+    // Gives an error: stack<string> sharkTypesStackError = {""};
+
+    sharkTypesStack.push("Great White");
+    sharkTypesStack.push("Bull");
+    sharkTypesStack.push("Lemon");
+    sharkTypesStack.push("Salmon");
+
+    cout << "Stack top: " << sharkTypesStack.top();
+
+    //the top value can also be changed with .top()
+
+    sharkTypesStack.top() = "Angel";
+
+    // the top can be removed with .pop();
+
+    sharkTypesStack.pop();
+    cout << "Stack top: " << sharkTypesStack.top();
+
+    // it also has .size() and .empty()
+    // it also has no index
+
+
+    cout << "\n\nQueues:\n";
+
+    // basically the same as with the stack but the last pushed variable gets popped
+
+    queue<string> sharkTypesQueue;
+
+    sharkTypesQueue.push("Great White");
+    sharkTypesQueue.push("Lemon");
+    sharkTypesQueue.push("Salmon");
+
+    cout << sharkTypesQueue.front() << endl;
+    cout << sharkTypesQueue.back() << endl;
+     
+    sharkTypesQueue.pop();
+
+    cout << sharkTypesQueue.front() << endl;
+
+    // it also has .size() and .empty()
+    // it also has no index
+
+
+    
+
+    cout << "\n\nDeques:\n";
+
+    // Deques are a combination of queues and stacks where both ends can be pushed and popped
+    // Unlike queues and stacks, deques do have indexes and they can be initialized with values.
+
+    deque<string> sharkTypesDeque = {"Great White", "Lemon", "Salmon"};
+
+    sharkTypesDeque.push_back("Whale");
+    sharkTypesDeque.push_front("Hammerhead");
+
+    sharkTypesDeque.pop_back();
+    sharkTypesDeque.pop_front();
+
+    sharkTypesDeque.at(1) = "Greenland";
+
+    // also has .size() and .empty()
+
+
+    
 
     return 0;
 }
