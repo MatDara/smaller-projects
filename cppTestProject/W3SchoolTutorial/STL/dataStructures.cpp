@@ -306,8 +306,14 @@ int main(){
 
     // NOTE: remember that maps give the pair type which consists of the key and the variable
 
+
+
+
     // Algorithms:
     // Algorithms need to be included trough the <algorithm> library
+    // they usually take (beginning iterator, ending iterator, value)
+
+    // here are some algorithms as examples:
 
     cout << "\nSharks sorted:\n";
 
@@ -325,10 +331,49 @@ int main(){
         cout << shark << endl;
     }
 
+    auto itFind = find(sharkTypes.begin(), sharkTypes.end(), "Lemon"); // auto can be either an iterator or a reverse iterator based on the values given
 
+    cout << "\n\nFound: " << *itFind << endl;
+
+    vector<string> sharkTypesCopy(sharkTypes.size());
+
+    copy(sharkTypes.begin(), sharkTypes.end(), sharkTypesCopy.begin());
+
+    cout << "\nSharks copy" << endl;
+    for(string shark : sharkTypesCopy){
+        cout << shark << endl;
+    }
+    cout << "end copy" << endl;
+
+    vector<string> sharks(10);
+    fill(sharks.begin(), sharks.end(), "Shark");
+
+    cout << "\nSharks:" << endl;
+    for(string shark : sharks){
+        cout << shark << endl;
+    }
 
     
-    // continue at C++ Algorithms chapter
+    auto upIt = upper_bound(sharkTypes.begin(), sharkTypes.end(), "Great White");
+
+    cout << "\n\nUpper: " << *upIt; // WHERE DOES TIGER COME FROM?????
+
+    // NOTE: don't use string vectors with these algorithms to avoid confusion
+
+    vector<int> numbers = {2, 9, 3, 5, 4, 7};
+
+    sort(numbers.begin(), numbers.end());
+
+    auto upperIt = upper_bound(numbers.begin(), numbers.end(), 4);
+
+    cout << "\n\nUpper Int for 4: " << *upperIt;
+
+    auto maxIt = max_element(numbers.begin(), numbers.end());
+    cout << "\n\nMax Int: " << *maxIt;
+
+    auto minIt = min_element(numbers.begin(), numbers.end());
+    cout << "\n\nMin Int: " << *minIt;
+
 
     return 0;
 }
