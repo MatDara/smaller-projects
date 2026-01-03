@@ -44,7 +44,7 @@ The input variable can also be a boolean or a number, but if the input doesn't c
 Note that the cin will only read until the enter key or space key get pushed.  
 To be able to use spaces in the console input, the function `getline(cin, inputX);` where `inputX` is a declared variable can be use.  
 
-### Operations:
+### Operations
 
 Arithmetic Operations are the same as in C# and Java
 
@@ -91,7 +91,7 @@ Same as in C basically.
 
 *Comparison Operators*, *Logical Operators* and the *Order of Operations* is the same as in C# and Java
 
-### Strings:
+### Strings
 
 Omitting Namespace std:  
 
@@ -116,14 +116,14 @@ Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 109 to 111.
 
 Strings can als be done C-style using character arrays.
 
-### Math functions:
+### Math functions
 
 To use math functions, the `<cmath>` library needs to be included.  
 
 It includes common functions like sqrt(), pow(), round(), ceil(), floor(), etc.
 
 
-### boolalpha:
+### boolalpha
 
 To change the appearance of booleans in the output (true/false instead of 1/0), 
 the `std::boolalpha` manipulator from the `<iomanip>` library can be used.  
@@ -134,3 +134,108 @@ Using boolalpha is useful, for avoiding confusion when displaying boolean values
 The `noboolalpha` manipulator can be used to turn it back to 0 and 1.
 
 Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 166 to 170.
+
+### Conditional Statements
+
+Conditional statements (if, else if, switch, ...) work the same way as in C# and Java. 
+
+The ternary operator works also the same way as in C# and Java (condition ? value_if_true : value_if_false)
+
+### Loops
+
+Loops also work the same way as in C# and Java.
+
+The `break` and `continue` statements are the same as in C# and Java.
+
+Don't forget to use them and remember that they only affect the innermost loop and not the if statements.
+
+
+### Arrays
+
+Arrays are the same as always.  
+Remember to use foreach loops to iterate through them when possible.
+
+Vectors (dynamic arrays) are provided by the `<vector>` library.  
+They need to be included separately.  
+They work similarly to Lists in C# and Java.  
+Vectors will be explained more thoroughly later.  
+
+The sizeof() function can be used to get the size of data types and variables in bytes.  
+It returns the size in bytes of the whole array, not the number of elements in an array.  
+To get the number of elements in an array, the total size of the array needs to be divided by the size of an element.  
+Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 212 to 216.  
+
+Multi-dimensional arrays work the same way as in C# and Java.  
+
+
+### Structures
+
+They are more or less the same as records in C#.  
+Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 237 to 260. 
+
+
+### Enums
+
+Enums work more or less the same way as in C# and Java.  
+Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 268 to 300.
+
+
+### References
+
+References are more or less linked copies to values.
+A reference needs to have something to reference to.
+Changes made to the reference reflect to the referenced variable and vise versa. 
+
+Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 306 to 316.
+
+### Pointers
+
+Pointers are variables that store memory addresses.  
+The value of the address where the pointer is pointing can be changed trough the pointer.  
+The type of the pointer has to be the same as the type of the variable where the pointer points to.  
+Unlike references, pointers can be declared without having a value.
+
+Example: `type* pointerToVariable = &variableBeingPointedTo;` The type has to be the same as the variableBeingPointedTo type.  
+
+More examples under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 322 to 329.
+
+
+### Difference between pointers and references
+
+A pointer is a variable that stores the memory address of another variable and can be reassigned, while a reference is an alias for an existing variable that must be initialized upon declaration and cannot be reassigned. Pointers can also be null and support pointer arithmetic, whereas references cannot be null and do not support arithmetic operations.
+
+### Memory management in C++
+
+Pointers are useful for dynamic memory allocation.  
+C++ does not have a garbage collector like C# and Java so memory allocated with new must be manually freed with delete to avoid memory leaks.
+If the memory is not freed, it will remain allocated until the program ends.  
+Allocating too much memory without freeing it can lead to memory exhaustion and crashes.  
+Note that memory allocated with `new` and `malloc` in functions do not get cleared after the function ends and stay there until the end of the program.  
+Deallocating can be done with `delete` or `free`.  
+In the cases of arrays, use `delete[]` to free the memory.  
+
+ When to use new:
+- You don't know how much memory you'll need in advance (like how many guests or scores).
+- You want to create memory while the program is running, based on user input.
+- You need to store large or flexible amounts of data.
+- You want full manual control over memory (e.g., performance-critical code).
+
+Don't forget to use delete or delete[] to free memory when you're done with it!
+
+Examples under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 344 to 351.
+
+## Functions
+
+## Classes
+
+## Errors
+
+## Data Structures
+
+## Namespaces   
+
+## Header Files
+
+## CMake
+
+# Summary
