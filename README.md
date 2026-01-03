@@ -13,14 +13,14 @@ Each folder has its own README or comments explaining what I did and how it work
 
 ## Current Projects 
 ### Simple C++ test program
-A program to learn the basics in c++
+Learning the basics of C++.
 
-Look under cppTestProject/W3SchoolTutorial/myFirstProgram.cpp for notes I made via Comments. 
+Look under cppTestProject/ for notes I made via comments or at the cppTestProject/documentation.md. 
 
-todo: write the comments into a Markdown File, continue from the C++ functions chapter 
+todo: finish writing the comments into a Markdown File.
 
 ## Projects on hold
-### Spinning Doughnut
+### Spinning Doughnut (probably on hold indefinitely)
 
 ## Planned Projects
 ### RenCi
