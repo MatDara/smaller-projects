@@ -135,7 +135,7 @@ The `noboolalpha` manipulator can be used to turn it back to 0 and 1.
 
 Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 166 to 170.
 
-### Conditional Statements
+### Conditional statements
 
 Conditional statements (if, else if, switch, ...) work the same way as in C# and Java. 
 
@@ -226,9 +226,135 @@ Examples under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 344 to 351.
 
 ## Functions
 
-## Classes
+Functions work a lot differently from their counterparts in C# and Java.  
 
-## Errors
+IMPORTANT: the W3Schools explanation of functions is pretty good for people who are used to C# and Java.  
+With that said there is nothing else positive about the W3Schools tutorial of functions. The same thing applies to classes.  
+
+### Declaration and definition
+
+Functions need to be declared in a header file or at the top.  
+This is so that when the program gets started and starts reading from top to bottom, it realizes that the function exists and can be called later on.  
+Declaration should only occur once.  
+Header files will be explained more thoroughly in its own chapter.
+
+Functions can be defined anywhere as long as they were declared beforehand. Definition can also be done as the same time as declaration (except in the header file of course) but it is usually preferred for them to be declared in a header file.
+
+### Function parameters
+
+Function parameters in C++ differ quite a bit from their counterparts in C# and Java.  
+
+There are three ways to use parameters:
+
+- Pass-by-value: `void f(int x);` It creates a copy of the value and uses that in the function.  
+- Pass-by-reference: `void f(int& x);` It uses the value itself instead of a copy of the value.  
+- Read-only reference: `void f(const std::string& s);` Just like its name implies, it uses the reference but makes it read-only. This is the most common one to use. 
+
+NOTE that Arrays are pass-by-reference by default.
+
+### Default argument
+
+Default arguments give a default value if a function gets called without a value and a default argument is provided.  
+This needs to be in the definition.  
+
+Default arguments only work from right to left!  
+
+Note that virtual functions always use the original arguments value even if that value is overridden and should be avoided there because of it!  
+
+
+### Memory management
+
+Even tough C++ has no Garbage Collector, the values still get cleared after the function ends, unless it is made with `new`, in which case it needs to be deleted with `delete`.
+
+Using `new` is a pretty bad practice tough and should be avoided if possible.  
+Instead of using `new` it is preferred to use `std::make_unique`.  
+Example: `auto p = std::make_unique<int>(5);`
+
+### Dangling reference
+
+A dangling reference is a reference to value inside a function.  
+This value will be deleted after the function ends and the reference will reference a point in memory that no longer exists.
+
+Example of what ***NOT*** to do: 
+```
+int& doNotDoThis(){
+    int x;
+    return x;
+}
+
+...
+
+int& r = doNotDoThis();
+```
+
+If for some forsaken reason the reference of a value is needed, then make sure that that value is outside of the function.
+
+
+### Function overloading
+
+Functions can be overloaded, just like in C# and Java.
+
+Watch out that the parameters differ!
+
+
+### Global variables
+
+Global variables can be accessed anywhere just like in C# and Java.
+
+They should be only used when necessary.
+
+
+### Recursion
+
+Recursion is when a function calls itself over and over.  
+They tend to get confusing.
+
+
+## Lambda expressions
+
+Lambda functions are somewhat confusing to grasp but also very useful.  
+They are basically functions but treated as values.
+
+### Syntax
+
+Lambda functions consist of capture `[]`, parameters `()`, a return type `-> return_type` and a body `{ body };`  
+
+Example: `[&x](int y) -> int { return x + y; };`  
+
+Most parts are optional!
+
+### Captures
+
+Captures are used to capture the surrounding variables.  
+The variables outside of lambdas can not be used inside the lambdas.
+
+Note that capture makes a copy of the variable by default, but can also make references with the `&` before the variable.  
+Alternatively by doing `[=]` all the values in the current scope can be copied and by doing `[&]` all values in the current scope can be referenced.
+
+NOTE that using references can be very dangerous because it tends to create dangling references.
+
+The captures are const by default but by using the `mutable` keyword on the lambda they can be changed.  
+Example:
+```
+auto f = [x]() mutable {
+    x++; // modifies the copy
+};
+```
+
+
+### Generic lambdas (C++14+)
+
+Pretty self explanatory:
+```
+auto add = [](auto a, auto b) {
+    return a + b;
+};
+
+add(1, 2);
+add(1.5, 2.3);
+```
+
+## Classes
 
 ## Data Structures
 
