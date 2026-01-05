@@ -356,6 +356,121 @@ add(1.5, 2.3);
 
 ## Classes
 
+Classes get quite confusing if one is accustomed to C# and Java.
+
+There are many things that should be kept in mind when working with classes in Java, for instance that there is no garbage collector or that `const` needs to be used way more often and in places where C# and Java wouldn't even allow a `const` to be used.
+
+### Declaration and definition
+
+Just like with functions, the declaration and definition can (and should) be separated. Because of this, declarations can get really unreadable.  
+
+Because of this one file should usually only contain one class and maybe its helpers.
+
+### Constructors
+
+Constructors in C++ work a bit differently then their counterparts in C# and Java.
+
+In C++ constructors should always use member initializer lists unless the value needs to be manipulated before it gets set.
+
+Example:  
+MyClass.h:
+```
+#pragma once
+
+#include <string>
+
+class MyClass{
+    private:
+        int myNum_;
+        std::string myString_;
+    public:
+        MyClass(int myNum, std::myString);
+};
+```
+MyClass.cpp:
+```
+#include "MyClass.h"
+
+MyClass::MyClass(int myNum, std::string myString) 
+    : myNum_(std::max(0, myNum)), myString_(std::move(myString)) {} 
+```
+NOTE that the `std::max()` makes sure that `myNum` is positive and makes `myNum_` 0 if it isn't  
+The `std::move()` basically transfers the ownership of the string `myString` to `myString_` which avoids copying (which would get really slow with large strings) but makes the `myString` unusable.
+
+`std::move()` should always be used for strings.
+
+The initializer list of a constructor should be used for the following:  
+- Initializing member variables  
+- Enforcing invariants  
+- Passing arguments to member constructors  
+- Initializing `const` members  
+- Initializing references  
+
+The body of a constructor should be used for the following:  
+- Side effects
+- Validation that can fail (throwing)
+- Logging
+- Registering with systems
+- Acquiring resources that may fail
+- Running code that depends on this being fully formed
+
+### Destructor
+
+Destructors clean up the memory after a class gets deleted (via manual deletion, running out of scope, etc).  
+
+They can be defined with a `~`(*tilda*) and the class name.
+
+It is the last thing called before the class gets completely removed.  
+
+values assigned with `new` need to be deleted manually in the destructor. Everything else gets deleted automatically.
+
+
+Example:
+MyClass.h:
+```
+#pragma once
+
+#include <string>
+
+class MyClass{
+    private:
+        int myNum_;
+        std::string myString_;
+    public:
+        MyClass(int myNum, std::myString);
+        ~MyClass();
+};
+```
+MyClass.cpp:
+```
+#include "MyClass.h"
+
+MyClass::~MyClass(){
+    // no manual cleanup
+}
+```
+Alternatively they can be also done with `~MyClass() = default;`, where MyClass is the class name, if the body of the destructor is empty.
+
+The body is useful for deleting values set with `new`, closing files and ending everything that won't be further used after the class gets deleted.
+
+Destructors first destroy the class and then everything else in reverse order to the constructor.
+
+### Using const
+
+### Friend function
+
+### Inheritance
+
+### Polymorphism
+
+### Virtual
+
+### Templates
+
+## Files
+
+## Date & time
+
 ## Data Structures
 
 ## Namespaces   
