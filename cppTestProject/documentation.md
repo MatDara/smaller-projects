@@ -8,7 +8,7 @@ In the following documentation, I'll try to keep things simple by referencing ot
 
 ## Basics
 
-A C++ file always contains the main class:
+A C++ program must define a `main()` function, which will serve as the programs entry point:
 
 ```
 int main() { 
@@ -28,7 +28,7 @@ C++ is a type based language, like C# and Java, containing types like int, char,
 An important thing to note is that string isn't in by default but can be included from the std namespace and by including it at the top with a `#include <string>`.
 
 If `using namespace std;` is used, then the `string` keyword and other keywords included in the std namespace can be used without having to write `std::` before the keywords each time they are used.  
-This practice isn't recommended tough and can cause problems if multiple namespaces use the same keyword names.  
+This practice isn't recommended in most cases tough and can cause problems if multiple namespaces use the same keyword names.  
 
 There is also the `auto` keyword can be used to automatically get the correct type for the variable that is getting assigned.
 
@@ -116,6 +116,8 @@ Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 109 to 111.
 
 Strings can als be done C-style using character arrays.
 
+NOTE that C-style strings should be avoided, except when interfacing with a C API.
+
 ### Math functions
 
 To use math functions, the `<cmath>` library needs to be included.  
@@ -182,9 +184,8 @@ Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 268 to 300.
 
 ### References
 
-References are more or less linked copies to values.
-A reference needs to have something to reference to.
-Changes made to the reference reflect to the referenced variable and vise versa. 
+A reference is an alias to an existing object (similar to a linked copy) and thus needs to have something to reference to.  
+Changes made to the reference reflect to the referenced variable and vice versa. 
 
 Example under /W3SchoolTutorial/basics/myFirstProgram.cpp at lines 306 to 316.
 
@@ -207,12 +208,16 @@ A pointer is a variable that stores the memory address of another variable and c
 ### Memory management in C++
 
 Pointers are useful for dynamic memory allocation.  
-C++ does not have a garbage collector like C# and Java so memory allocated with new must be manually freed with delete to avoid memory leaks.
+C++ does not have a garbage collector like C# and Java so memory allocated with `new` must be manually freed with `delete` to avoid memory leaks.
 If the memory is not freed, it will remain allocated until the program ends.  
 Allocating too much memory without freeing it can lead to memory exhaustion and crashes.  
 Note that memory allocated with `new` and `malloc` in functions do not get cleared after the function ends and stay there until the end of the program.  
 Deallocating can be done with `delete` or `free`.  
 In the cases of arrays, use `delete[]` to free the memory.  
+
+NOTE that `new` should only be freed with `delete`, `new[]` with `delete[]` and `malloc` with `free` without being mixed.
+
+NOTE that `new` should be avoided for making variables. Use `std::unique_ptr` and `std::shared_ptr` instead.
 
  When to use new:
 - You don't know how much memory you'll need in advance (like how many guests or scores).
@@ -234,7 +239,7 @@ With that said there is nothing else positive about the W3Schools tutorial of fu
 ### Declaration and definition
 
 Functions need to be declared in a header file or at the top.  
-This is so that when the program gets started and starts reading from top to bottom, it realizes that the function exists and can be called later on.  
+The compiler must see a declaration before a name is used in a given source file.  
 Declaration should only occur once.  
 Header files will be explained more thoroughly in its own chapter.
 
@@ -250,12 +255,18 @@ There are three ways to use parameters:
 - Pass-by-reference: `void f(int& x);` It uses the value itself instead of a copy of the value.  
 - Read-only reference: `void f(const std::string& s);` Just like its name implies, it uses the reference but makes it read-only. This is the most common one to use. 
 
-NOTE that Arrays are pass-by-reference by default.
+NOTE that arrays decay to pointers when passed to functions.  
+Example:
+```
+void f(int arr[])   // actually int*
+void f(int* arr)   // same thing
+```
+
 
 ### Default argument
 
 Default arguments give a default value if a function gets called without a value and a default argument is provided.  
-This needs to be in the definition.  
+This needs to be in the declaration.  
 
 Default arguments only work from right to left!  
 
@@ -266,7 +277,7 @@ Note that virtual functions always use the original arguments value even if that
 
 Even tough C++ has no Garbage Collector, the values still get cleared after the function ends, unless it is made with `new`, in which case it needs to be deleted with `delete`.
 
-Using `new` is a pretty bad practice tough and should be avoided if possible.  
+Manual use of new should be avoided in most application code.
 Instead of using `new` it is preferred to use `std::make_unique`.  
 Example: `auto p = std::make_unique<int>(5);`
 
@@ -368,7 +379,7 @@ Because of this one file should usually only contain one class and maybe its hel
 
 ### Constructors
 
-Constructors in C++ work a bit differently then their counterparts in C# and Java.
+Constructors in C++ work a bit differently than their counterparts in C# and Java.
 
 In C++ constructors should always use member initializer lists unless the value needs to be manipulated before it gets set.
 
@@ -395,9 +406,9 @@ MyClass::MyClass(int myNum, std::string myString)
     : myNum_(std::max(0, myNum)), myString_(std::move(myString)) {} 
 ```
 NOTE that the `std::max()` makes sure that `myNum` is positive and makes `myNum_` 0 if it isn't  
-The `std::move()` basically transfers the ownership of the string `myString` to `myString_` which avoids copying (which would get really slow with large strings) but makes the `myString` unusable.
+The `std::move` allows the object to be moved from `myString` to `myString_`, which avoids copying (which could get really slow with large strings),  and leaves the original `myString` in a valid but unspecified state.
 
-`std::move()` should always be used for strings.
+Use `std::move` only when you no longer need the source object.
 
 The initializer list of a constructor should be used for the following:  
 - Initializing member variables  
@@ -422,7 +433,7 @@ They can be defined with a `~`(*tilda*) and the class name.
 
 It is the last thing called before the class gets completely removed.  
 
-values assigned with `new` need to be deleted manually in the destructor. Everything else gets deleted automatically.
+Values assigned with `new` need to be deleted manually in the destructor. Everything else gets deleted automatically.
 
 
 Example:
@@ -453,11 +464,18 @@ Alternatively they can be also done with `~MyClass() = default;`, where MyClass 
 
 The body is useful for deleting values set with `new`, closing files and ending everything that won't be further used after the class gets deleted.
 
-Destructors first destroy the class and then everything else in reverse order to the constructor.
+Destructors first calls the body, then Member subobjects are destroyed (in reverse order of declaration) and then the base classes are destroyed. 
+
+### RAII
+
+RAII, or Resource Acquisition Is Initialization, is a programming idiom in C++ that ties resource management to the lifetime of objects.  
+It ensures that resources are acquired during object creation and released when the object is destroyed, helping to prevent resource leaks and manage memory safely.  
+
+This can be achieved with destructors, not using `new` to allocate values and to generally make sure that everything that goes unused gets deleted.
 
 ### Using const
 
-The `const` keyword is used way more often in C++ then in C# or Java.
+The `const` keyword is used way more often in C++ than in C# or Java.
 
 If a member function in class doesn't change any variables (like a getter) then it has to be declared a const.  
 
@@ -494,9 +512,12 @@ const std::string& MyClass::myString() const {
 NOTE that the `myString()` is in this case a constant string reference (`const std::string&`). It is constant because it shouldn't be changed from the outside and a reference because having to many string copies might become problematic in terms of memory management.  
 Copying string wastes CPU work and memory allocation!
 
+NOTE that the `const` keyword is also used very often in function in combination with `&`reference, instead of just copying values over and over, to save on memory. Whenever a const reference can be used, then it probably should be used.
+
 
 ### Friend function
 
+Friend functions are functions, primarily used to access private variables from classes.
 
 
 ### Inheritance
@@ -512,15 +533,13 @@ Examples under /W3SchoolTutorial/classes/classes.cpp at lines 234 to 249.
 
 ### Polymorphism
 
-Polymorphism is basically just overloading a function from a base class.
-
-The same function name can be given for a member function in a child class as the one in a parent class. If that function gets called in a child class then the definition in the child class will be used.
+With Polymorphism, the same function name can be given for a member function in a child class as the one in a parent class. If that function gets called in a child class then the definition in the child class will be used.
 
 Example under /W3SchoolTutorial/classes/classes.cpp at lines 255 to 261.
 
 ### Virtual
 
-In some cases, C++ gets confused and doesn't do polymorphism the way that might be intended (Example under /W3SchoolTutorial/classes/classes.cpp at lines 270 to 274).  
+In some cases, polymorphism might not work the way that might be intended and statically binds member function to the base class (Example under /W3SchoolTutorial/classes/classes.cpp at lines 270 to 274).  
 In this cases `virtual` has to be used.  
 Example for `virtual` under /W3SchoolTutorial/classes/classes.cpp at lines 278 to 282.  
 
@@ -568,16 +587,272 @@ Here's a quick guide to all the important data structures:
 - Set: basically a hashset. Only one instance of each entry can exist. The entries have no indexes.  
 - Map: basically a hashmap. Each entry has a key but no index. Keys can obviously not be reused.  
 
+Examples under /W3SchoolTutorial/STL/dataStructures.cpp at lines 39 to 257. 
 
 
 ### Iterators
 
+Iterators iterate trough elements of data structures.  
+NOTE that stacks and queues don't have iterators.  
+
+Iterators are mainly used for manipulating elements in data structures and to make code more reusable.
+
+By using `.begin()` on a data structure, the first element of the data structure in form of an iterator with the same corresponding type gets returned.  
+Example: 
+```
+std::vector<std::string> v = {"a", "b", "c"};
+std::vector<std::string>::iterator it = v.begin(); // the first element
+```
+
+By using `.end()` the element that is saved after the last element of the data structure gets returned in form of an iterator, just like with the `.begin()`.  
+This is usually used for loops.  
+
+The `.begin()` and `.end()` can also be added to and subtracted from to get different indexes of the data structure.
+
+Example
+```
+std::vector<std::string> v = {"a", "b", "c"};
+std::vector<std::string>::iterator it = v.end() - 1; // the last element
+```
+
+There are also the reverse iterators `.rbegin()` and `.rend()` that act just like normal iterators, except that they begin from the end and are the type `std::reverse_iterator`.
+
+NOTE that maps give the pair type which consists of the key and the variable.
+
+Examples under /W3SchoolTutorial/STL/dataStructures.cpp at lines 265 to 305.  
+
+
 ### Algorithms
+
+Algorithms are used with iterators to manipulate or inspect data structures. 
+
+They are pretty self explanatory.
+
+Examples under /W3SchoolTutorial/STL/dataStructures.cpp at lines 265 to 305. 
+
 
 ## Namespaces   
 
+Namespaces are used to separate code by grouping functions, classes, variables, etc. and thus prevent name collision.
+
+Namespaces can span over multiple files without any problem.
+
+The standard library is in the `std` namespace.  
+This is why it is required to either use `std::` or `using namespace std;` (which is not recommended to use in most cases) before using features that are in the `std` library (like `string` or `vector`).
+
+NOTE that using `using namespace std;` isn't prohibited but should never be used in header files and should only be used in smaller projects.
+
+Single names can also be brought into scope.  
+Example: `using std::string;`
+
+There can also be anonymous namespaces that makes everything private to the .cpp file.
+
+Namespaces can also be nested like this:  
+```
+namespace hospital {
+    namespace room {
+        void visit();
+    }
+}
+```
+or:
+```
+namespace hospital::room {
+    void visit();
+}
+```
+And can be used like this:  
+```
+hospital::room::visit();
+```
+
+NOTE that declaring variables in namespaces should be done with `inline` to avoid errors otherwise it will be a global variable (which should be avoided).
+
+
+## Errors
+
+Errors are mistakes in the program that shouldn't appear but still often do because of: one or more mistakes in the program, problem with something external (libraries, user input, etc.), because something isn't done or wasn't handled properly, or some other reason.
+
+An error can occur either at compile-time or at runtime.
+
+### Compile-Time Errors
+Compile-time errors are usually mistakes with the syntax (using a variable that wasn't assigned yet, forgetting a semicolon, using the wrong type, ...)
+
+These errors get caught before the program even begins to run during the compiling.
+
+### Runtime Errors
+Runtime errors are logical mistakes within the code itself (dividing by zero, trying to access an index outside the bounds of an array, using deleted memory, ...)
+
+### Things to look out for to avoid errors
+Compile-time errors are the easiest to avoid because the IDE usually warns about those but even if the IDE for some reason didn't display a warning at the error, the compiler will still give us a descriptive error message when trying to run the program.
+
+To avoid runtime errors, always look up how the functions that are being used work, be careful with loops and indexes and try to make the code easily understandable so that errors can be easily found and fixed.
+
+
+### Debugging
+
+There are two ways to debug: manually debugging and debugging with built in debuggers.
+
+### Manually Debugging
+Manually Debugging is the simplest form of debugging. If something isn't working then just check the variables that you are guessing are most likely working incorrectly and print out messages how far the program runs before crashing. This method of debugging can be done very quickly and does not require the help of any built in debugger from an IDE. Most of the times this is enough for a bug to be found but in cases where the code gets very complicated or you have absolutely no clue what and where is not working, this approach might become annoying.
+
+### Debugging with debuggers
+Most IDEs have an already built in debugger. With the help of these debuggers, breakpoints can be placed in the code, so that you can look at all the variables in the current scope and what exactly the code is doing line by line. Note that the debugger change depending on what IDE is use.
+
+### Exception Handling
+Some errors may only happen if specific things happen in the code (like if the user decides to divide by 0). 
+
+Exception handling is a way to deal with errors while the program is running and run specific code when something goes wrong.
+
+
+### Exceptions
+Exceptions are errors that only get triggered in specific case. 
+
+When an error is triggered, C++ throws an exception.
+
+These exceptions can be caught in the code using the keywords `try` and `catch` (just like in other languages).
+
+The code itself can also throw exceptions using the keyword `throw`
+
+Example:
+```
+try {   
+  // Code that may throw an exception   
+  throw 505;   
+}   
+catch (int errorCode) {   
+  cout << "Error occurred: " << errorCode;   
+}
+```
+
+### C++ Input Validation
+Never trust the user input! Always validate it by checking if the input is allowed. If it is invalid then try asking the user for a valid input again or just throw an error.
+
+The `cin` object from the `iostream` library is very useful for getting and validating user input. Look it up how exactly it works!
+
+
+
 ## Header Files
+
+Header files are one of the most important features of C++.  
+They are used to for declaring basically everything that needs to be declared (class declarations, function declarations, enums, constants, templates, etc.).
+
+Header files should always start with `#pragma once` so that the compiler knows that the header file should only be copied once.  
+Alternatively include guards can be used:
+```
+#ifndef EXAMPLE_H
+#define EXAMPLE_H
+
+// stuff here
+
+#endif
+```
+`#pragma once` is preferred because it is less prone to errors and simpler to read.  
+
+
+Definitions should stay out of the header file except in a few cases.
+
+Only the stuff that is used in the header file should be included in the header file.
+
+
+The syntax for including looks like this: `#include "HeaderFileName.h"`
+
+### Forward referencing
+
+If two header files both try to include the other one, an infinite loop happens (not good).  
+To circumvent this, a forward reference is created in the header file.
+The forward referenced class can only be used as a reference or a pointer and its member variables are inaccessible.  
+
+Example:
+Person.h:
+```
+#pragma once
+
+class Address; // forward declaration
+
+class Person {
+    Address* address; // pointer
+};
+```
+Address.h:
+```
+#pragma once
+
+class Person; // forward declaration
+
+class Address {
+    Person* owner;
+};
+
+```
+
 
 ## CMake
 
+CMake is a ***build system generator*** that generates build files and allows C++ files to be compiled together. It helps with the compilation of projects.
+
+To use CMake, a `CMakeLists.txt` needs to exist. This file tells CMake, how the build files should look like.
+
+NOTE that the build folder should be ignored by git via a .gitignore.
+
+### CMakeLists.txt
+
+For CMake to work, the following stuff should be included in the CMakeLists.txt:
+
+```
+cmake_minimum_required(VERSION 3.20)
+```
+This tells Cmake what the minimum required version of CMake should be.
+
+```
+project(MyProject LANGUAGES CXX)
+```
+This tells CMake to create a project named MyProject in the language C++ (CXX stands for C++).
+
+```
+add_executable(MyProject
+    my_program.cpp
+    my_class.h
+    my_class.cpp
+)
+```
+This tells CMake to create an executable that consists of the files `my_program.cpp`, `my_class.h` and `my_class.cpp`for the project `MyProject`.  
+Header files don't need to be included, but it is preferred for them to be included. 
+
+With this, the C++ project is ready to run.  
+
+
+There are a bunch of options that can be added like:
+Enforce C++ version:
+```
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+```
+This tells CMake that the C++ standard is on version 17 and that it needs to enforce that that standard (only allows C++ version 17 or above).
+
+Add libraries:
+```
+add_library(MathLib
+    src/math.cpp
+    src/math.h
+)
+```
+
+Linking libraries:
+```
+add_executable(MyApp src/main.cpp)
+
+target_link_libraries(MyApp PRIVATE MathLib)
+```
+
+
 # Summary
+
+I learned the basics of C++.  
+
+There are still many things that I need to learn (how libraries work, how exactly CMake works, etc.) but for now I'm proud with everything I achieved.  
+
+
+Start of project: 21.12.2025  
+End of project: 05.01.2026  
+Duration: 15 Days
