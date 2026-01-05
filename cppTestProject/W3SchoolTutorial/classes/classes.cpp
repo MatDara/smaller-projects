@@ -250,7 +250,7 @@ int main(){
 
 
     // Polymorphism:
-    // Basically just overriding a function from a base class
+    // Basically just overloading a function from a base class
     
     Animal animal;
     Pig pig;

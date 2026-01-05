@@ -457,21 +457,122 @@ Destructors first destroy the class and then everything else in reverse order to
 
 ### Using const
 
+The `const` keyword is used way more often in C++ then in C# or Java.
+
+If a member function in class doesn't change any variables (like a getter) then it has to be declared a const.  
+
+Example:
+MyClass.h:
+```
+#pragma once
+
+#include <string>
+
+class MyClass{
+    private:
+        int myNum_;
+        std::string myString_;
+    public:
+        MyClass(int myNum, std::myString);
+        ~MyClass();
+        int myNum() const;
+        const std::string& myString() const;
+};
+```
+MyClass.cpp:
+```
+#include "MyClass.h"
+
+int MyClass::myNum() const{
+    return myNum_;
+}
+
+const std::string& MyClass::myString() const {
+    return myString_;
+} 
+```
+NOTE that the `myString()` is in this case a constant string reference (`const std::string&`). It is constant because it shouldn't be changed from the outside and a reference because having to many string copies might become problematic in terms of memory management.  
+Copying string wastes CPU work and memory allocation!
+
+
 ### Friend function
+
+
 
 ### Inheritance
 
+Inheritance in C++ works similarly to inheritance in C# with some small differences.  
+Member functions in parent classes can be used by child classes, without the need to declare or define them (as long as they were declared and defined in the parent class).  
+Classes can inherit from multiple classes and can have multilevel inheritance.  
+
+The `protected` keyword works similarly to their counterparts in C# and Java.
+
+Examples under /W3SchoolTutorial/classes/classes.cpp at lines 234 to 249.
+
+
 ### Polymorphism
+
+Polymorphism is basically just overloading a function from a base class.
+
+The same function name can be given for a member function in a child class as the one in a parent class. If that function gets called in a child class then the definition in the child class will be used.
+
+Example under /W3SchoolTutorial/classes/classes.cpp at lines 255 to 261.
 
 ### Virtual
 
+In some cases, C++ gets confused and doesn't do polymorphism the way that might be intended (Example under /W3SchoolTutorial/classes/classes.cpp at lines 270 to 274).  
+In this cases `virtual` has to be used.  
+Example for `virtual` under /W3SchoolTutorial/classes/classes.cpp at lines 278 to 282.  
+
+Although using `override` to make a member function overridden is optional, it should still be done to make the code cleaner.
+
 ### Templates
+
+Templates are more or less the same as generics in C# and Java.
+
+They are used to avoid code repetition by allowing functions and classes to use any type for the arguments.
+
+Examples under /W3SchoolTutorial/classes/classes.cpp at lines 297 to 308 
 
 ## Files
 
+Accessing files can be done via the `<fstream>` library.
+
+The `<fstream>` library consists of the `<ofstream>` library responsible for creating and writing into files and the `<ifstream>` library responsible for reading from files.
+
+Examples under /W3SchoolTutorial/classes/classes.cpp at lines 321 to 341. 
+
 ## Date & time
 
+The `<ctime>` library is a useful tool to work with date and time.
+
+It can be used for many things, like checking how long something took, or checking the current date and time and many other things.
+
+The `<ctime>` library gets pretty long, so instead of explaining it horribly, I'll just leave a link that explains it pretty well https://cplusplus.com/reference/ctime/. 
+
+Examples of using time and date under /W3SchoolTutorial/classes/classes.cpp at lines 351 to 436. 
+
 ## Data Structures
+
+Data Structures are used to store and organize data.
+An Array is a data structure because it can save multiple data in a single value.  
+C++ has many different data structures but these need to be included separately.  
+They are part of the C++ STL (Standard Template Library)
+
+Here's a quick guide to all the important data structures:  
+- Vector: basically an Array-List. It can store multiple data and each entry has its own index.  
+- List: basically a Linked-List. The entries have no indexes.  
+- Stack: it stores data after the LIFO principe (the newest entry gets accessed). The entries have no indexes.  
+- Queue: it stores data after the FIFO principe (the oldest entry gets accessed). The entries have no indexes.  
+- Deque: entries can be accessed from both sides or by indexes.  
+- Set: basically a hashset. Only one instance of each entry can exist. The entries have no indexes.  
+- Map: basically a hashmap. Each entry has a key but no index. Keys can obviously not be reused.  
+
+
+
+### Iterators
+
+### Algorithms
 
 ## Namespaces   
 
