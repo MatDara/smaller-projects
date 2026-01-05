@@ -34,5 +34,5 @@ Look under cppTestProject/ for notes I made via comments or at the cppTestProjec
 
 ## TODO
 - Make better todos
-- start a new project (preferable with c++)
+- start a new project (preferably with c++)
 - continue studying c++
