@@ -13,6 +13,10 @@ Each folder should have its own README or comments explaining what I did and how
 
 ## Current Projects 
 
+### Simple C++ GUI test project with SFML
+
+In this project, I'll try using libraries in C++ and try making a simple program using the SFML library.
+
 
 ## Projects on hold  
 ### Spinning Doughnut (probably on hold indefinitely)
