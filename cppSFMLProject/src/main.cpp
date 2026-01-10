@@ -1,4 +1,5 @@
 #include "start.h"
+#include "helloWorld.h"
 
 #include <iostream>
 #include <SFML/Window.hpp>
@@ -11,12 +12,13 @@ int main(){
     sf::RenderWindow window;
     window.create(sf::VideoMode({800, 600}), "My window");
 
-    std::unique_ptr<Program> current_Program = std::make_unique<Start>(); // needs to be changed from within the class
-
-    Start::addProgram(Start); // add classes here that derive from the class Program
-
+    Start start;
     
+    Program *current_Program = &start; // needs to be changed from within the class
 
+    HelloWorld test;
+
+    start.addProgram(&test);
 
     while (window.isOpen())
     {
@@ -24,12 +26,12 @@ int main(){
         while (const std::optional event = window.pollEvent())
         {
             // "close requested" event: we close the window
-            if (event->is<sf::Event::Closed>()){
+            if (event->is<sf::Event::Closed>() || current_Program == nullptr){
                 window.close();
             }
-
-            current_Program->call(window, event); // use this later
-
+            else{
+                current_Program->call(window, event, current_Program); // use this later
+            }
             
 
 

@@ -6,8 +6,9 @@ When the program starts, there should be an selection menu to select what class 
 
 ### Starting class
 
-A class that is derived from the Program abstract class is defined as default in the code.  
-This class can be changed for other classes to skip the selecting part when starting the program.  
+A class that is defined as default in the code.  
+
+The starting class should not derive from the Program class, because it needs special variables for it to be able to edit the current program.
 
 
 ## Abstract class: Program

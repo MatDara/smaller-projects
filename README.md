@@ -11,6 +11,8 @@ This repo is for experimenting and tracking progress over time.
 ## Notes  
 Each folder should have its own README or comments explaining what I did and how it works.
 
+**Commits might be less frequent due to large amount of tests until February**
+
 ## Current Projects 
 
 ### Simple C++ GUI test project with SFML
