@@ -17,4 +17,9 @@ void HelloWorld::call(sf::RenderWindow &window, const std::optional<sf::Event>& 
                     std::cout << "Hello World!\n";
                 }
             }
+    sf::Text text(font);
+    text.setString("Hello, World!");
+    text.setCharacterSize(50);
+
+    window.draw(text);
 }

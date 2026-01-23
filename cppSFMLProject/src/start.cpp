@@ -8,7 +8,8 @@ namespace {
 
 std::vector<Program*> Start::programs_;
 
-void Start::call(sf::RenderWindow &window, const std::optional<sf::Event>& event,  Program *&currentProgram) {
+void Start::call(sf::RenderWindow &window, const std::optional<sf::Event>& event,  Program *&currentProgram) 
+{
 
     if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
             {
@@ -52,11 +53,24 @@ void Start::call(sf::RenderWindow &window, const std::optional<sf::Event>& event
                 moveIndex(mouseWheelScrolled->delta);
             }
 
-    sf::Text text(font);
+        sf::Text text(font);
 
-    text.setString(std::to_string(index_)); // debug
+        text.setCharacterSize(24);
 
-    window.draw(text);
+        //sf::Vector2 pos;
+        text.setPosition({100.f, 10.f });
+        text.setString(std::to_string(index_)); // debug
+        window.draw(text);
+
+        sf::Vector2 pos = window.getSize();
+
+        pos.x /= 2;
+        
+        text.setPosition({pos.x, 10.f});
+        text.setString(std::to_string(pos.x));
+        text.setFillColor(sf::Color::Red);
+        text.setStyle(sf::Text::Underlined);
+        window.draw(text);
 }
 
 

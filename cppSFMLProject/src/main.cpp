@@ -25,6 +25,12 @@ int main(){
         // check all the window's events that were triggered since the last iteration of the loop
         while (const std::optional event = window.pollEvent())
         {
+
+           if(const auto* resized = event->getIf<sf::Event::Resized>()) {
+                sf::FloatRect visibleArea({0.f, 0.f}, sf::Vector2f(resized->size));
+                window.setView(sf::View(visibleArea));
+           }
+
             // "close requested" event: we close the window
             if (event->is<sf::Event::Closed>() || current_Program == nullptr){
                 window.close();
