@@ -27,6 +27,15 @@ int main(){
         {
 
            if(const auto* resized = event->getIf<sf::Event::Resized>()) {
+                if(resized->size.x < 600){
+                    window.setSize({600, resized->size.y});
+                }
+                if (resized->size.y < 600)
+                {
+                    window.setSize({resized->size.x, 600});
+                }
+                
+
                 sf::FloatRect visibleArea({0.f, 0.f}, sf::Vector2f(resized->size));
                 window.setView(sf::View(visibleArea));
            }

@@ -18,7 +18,7 @@ class Start : public Program{
 
         void moveIndex(int direction);
 
-        void drawWindow();
+        void drawWindow(sf::RenderWindow &window);
 
         static void addProgram(Program *program) {
             programs_.push_back(program);
