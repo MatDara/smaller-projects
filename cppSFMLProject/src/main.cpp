@@ -42,6 +42,9 @@ int main(){
 
             // "close requested" event: we close the window
             if (event->is<sf::Event::Closed>() || current_Program == nullptr){
+                if(current_Program != nullptr){
+                    current_Program->end(current_Program);
+                }
                 window.close();
             }
             else{
