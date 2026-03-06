@@ -15,13 +15,19 @@ Each folder should have its own README or comments explaining what I did and how
 
 ## Current Projects 
 
+### OpenGL learning program
+
+OpenGL is a high level graphical programming API. Although it isn't as widely used as it used to be, a lot of projects are still done using it.
+
+My goal is to learn the basics of graphical programming using OpenGL and then switch to Vulkan (a low level graphical programming API, widely used).
+
+look under openGL/README.md for a more detailed description
+
+## Projects on hold 
+
 ### Simple C++ GUI test project with SFML
 
 In this project, I'll try using libraries in C++ and try making a simple program using the SFML library.
-
-
-## Projects on hold  
-### Spinning Doughnut (probably on hold indefinitely)
 
 ## Planned Projects  
 ### RenCi  
