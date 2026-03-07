@@ -12,13 +12,23 @@ int main() {
 
     window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
 
-    //glfwClearColor(0.2f, 0.3f, 0.3f, 1.0f); // needs glad
+    glfwMakeContextCurrent(window);
+
+    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+
+    glClearColor(0.1f, 0.2f, 0.6f, 0.9f);
 
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
 
-        //glfwSwapBuffers(window);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glfwSwapBuffers(window);
     }
     
     glfwTerminate();
